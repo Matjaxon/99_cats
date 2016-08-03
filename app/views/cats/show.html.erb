@@ -1,0 +1,48 @@
+<h1><%= @cat.name %></h1>
+
+<table>
+  <tr>
+    <th>Age</th>
+    <td><%= @cat.age %></td>
+  </tr>
+  <tr>
+    <th>Color</th>
+    <td><%= @cat.color.capitalize %></td>
+  </tr>
+  <tr>
+    <th>Sex</th>
+    <td><%= @cat.sex %></td>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td><%= @cat.description %></td>
+  </tr>
+</table>
+
+<% if @cat_rental_requests.empty? %>
+  <p>No requests pending. This cat must be ugly</p>
+<% else %>
+  <table>
+    <tr>
+      <th>Request ID</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Status</th>
+      <th>Approvals</th>
+    </tr>
+    <% @cat_rental_requests.each do |cat_rent_request| %>
+    <tr>
+      <td><%= cat_rent_request.id %></td>
+      <td><%= cat_rent_request.start_date %></td>
+      <td><%= cat_rent_request.end_date %></td>
+      <td><%= cat_rent_request.status %></td>
+      <td>
+        <% if cat_rent_request.pending? %>
+          <%= button_to "approve", approve_cat_rental_request_url(cat_rent_request) %>
+          <%= button_to "deny", deny_cat_rental_request_url(cat_rent_request) %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
